@@ -38,11 +38,23 @@ export async function GET({ url }) {
             },
         });
 
+        const heartRateIntraday = await fetch(`https://api.fitbit.com/1/user/${data.user_id}/activities/heart/date/2019-01-01/1d/1min.json`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${data.access_token}`,
+            },
+        });
+
         // Parse the response from the Fitbit API
         const fitbitApiData = await fitbitApiResponse.json();
 
+        const responseData = {
+            fitbitApiData,
+            heartRateIntraday
+          };
+
         // Return new response object with API data
-        return new Response(JSON.stringify(fitbitApiData), { headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify(responseData), { headers: { 'Content-Type': 'application/json' } });
 
         // I could probably pop HR data into database here [todo]
     } catch (error) {

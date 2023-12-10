@@ -3,8 +3,8 @@
     let codeChallenge
     let responseType = "code"
     let clientID = "23RFDV"
+    let fitbitData = null
     export let data
-    $: fitbitData = data
 
     async function getToken() {
       try {
@@ -85,8 +85,8 @@
 <h1 class='text-3xl text-bold'>Fitbit API (test)</h1>
 <div class='w-1/2 mx-auto border rounded-xl shadow shadow-sm text-left p-4 my-4 bg-white'>
 <p>App to grant researchers access to your fitbit data. If you are happy to allow access, please click on the link below.</p>
-{#if fitbitData.user}
-  Hello {fitbitData.user.firstName}!
+{#if fitbitData}
+  <p class='mt-4'>Hello {fitbitData.fitbitApiData.user.firstName}!</p>
 {:else}
   <p style="overflow-wrap: break-word;" class='mt-4'><a href={requestURL} class='hover:underline text-blue-500'>{requestURL}</a></p>
 {/if}
@@ -102,3 +102,4 @@
 Fetch token
 <button class="bg-blue-500 rounded-md hover:bg-blue-400 text-xs text-white p-1 px-2" on:click={getToken}>Get Token</button>
 </div>
+{JSON.stringify(fitbitData)}
