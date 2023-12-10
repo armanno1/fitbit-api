@@ -1,3 +1,5 @@
+import { supabase } from '../lib/supabaseClient.js';
+
 const client_secret = "335b6e53dc10a9cd2c243fe0a38780e4"
 const client_ID = "23RFDV"
 
@@ -39,7 +41,7 @@ export async function GET({ url }) {
         });
 
         // Parse the response from the Fitbit API
-        const fitbitApiData = await fitbitApiResponse.json();
+        const fitbitApiData = await fitbitApiResponse.json()
 
         // Return new response object with API data
         return new Response(JSON.stringify(fitbitApiData), { headers: { 'Content-Type': 'application/json' } });
