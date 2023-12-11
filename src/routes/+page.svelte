@@ -1,105 +1,136 @@
 <script>
-    let codeVerifier
-    let codeChallenge
-    let responseType = "code"
-    let clientID = "23RFDV"
-    let fitbitData = null
-    export let data
+  let codeVerifier;
+  let codeChallenge;
+  let responseType = "code";
+  let clientID = "23RFDV";
+  let fitbitData
+  let APIsuccess = false
+  export let data;
 
-    async function getToken() {
-      try {
-        const response = await fetch('/api?authCode=' + data.authCode + '&codeVerifier=' + localStorage.getItem('code_verifier'), {
-          method: 'GET'
+  async function getToken() {
+    try {
+      const response = await fetch('/api?authCode=' + data.authCode + '&codeVerifier=' + localStorage.getItem('code_verifier'), {
+        method: 'GET'
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        fitbitData = data
+        APIsuccess = true
       })
-        .then((response) => response.json())
-        .then((data) => {
-          fitbitData = data
-        })
-      } catch (error) {
-        console.error(error);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function generateKeyValueHtml(jsonData) {
+      let html = '';
+
+      // Iterate over each key/value pair in the JSON object
+      for (const [key, value] of Object.entries(jsonData)) {
+          html += `<p><strong>${key}:</strong> ${value}</p>`;
       }
-    }
 
-    $: requestURL = "https://www.fitbit.com/oauth2/authorize?client_id="
-        + clientID
-        + "&response_type="
-        + responseType
-        + "&code_challenge="
-        + codeChallenge
-        + "&code_challenge_method=S256"
-        + "&scope=activity%20heartrate%20location%20nutrition%20oxygen_saturation%20profile%20respiratory_rate%20settings%20sleep%20social%20temperature%20weight"
-            
-    // generate code verifier
-    function dec2hex(dec) {
-      return ("0" + dec.toString(16)).substr(-2);
-    }
+      return html;
+  }
 
-    function generateCodeVerifier() {
-      var array = new Uint32Array(56 / 2);
-      window.crypto.getRandomValues(array);
-      const code_verifier = Array.from(array, dec2hex).join("")
-      localStorage.setItem("code_verifier", code_verifier)
-      console.log(localStorage)
-      return code_verifier
-    }
+  // generate code verifier
+  function dec2hex(dec) {
+    return ("0" + dec.toString(16)).substr(-2);
+  }
 
-    function sha256(plain) {
-      // returns promise ArrayBuffer
-      const encoder = new TextEncoder();
-      const data = encoder.encode(plain);
-      return window.crypto.subtle.digest("SHA-256", data);
-    }
+  function generateCodeVerifier() {
+    var array = new Uint32Array(56 / 2);
+    window.crypto.getRandomValues(array);
+    const code_verifier = Array.from(array, dec2hex).join("");
+    localStorage.setItem("code_verifier", code_verifier);
+    return code_verifier;
+  }
 
-    function base64urlencode(a) {
-      var str = "";
-      var bytes = new Uint8Array(a);
-      var len = bytes.byteLength;
-      for (var i = 0; i < len; i++) {
-        str += String.fromCharCode(bytes[i]);
-      }
-      return btoa(str)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
-    }
+  function sha256(plain) {
+    // returns promise ArrayBuffer
+    const encoder = new TextEncoder();
+    const data = encoder.encode(plain);
+    return window.crypto.subtle.digest("SHA-256", data);
+  }
 
-    async function generateCodeChallengeFromVerifier(v) {
-      var hashed = await sha256(v);
-      var base64encoded = base64urlencode(hashed);
-      return base64encoded;
+  function base64urlencode(a) {
+    var str = "";
+    var bytes = new Uint8Array(a);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      str += String.fromCharCode(bytes[i]);
     }
+    return btoa(str)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+  }
 
-    async function getCodeChallenge() {
-      try {
-        codeChallenge = await generateCodeChallengeFromVerifier(
-          codeVerifier
-        )          
-      } catch (error) {
-          console.error(error)
-        }
+  async function generateCodeChallengeFromVerifier(v) {
+    var hashed = await sha256(v);
+    var base64encoded = base64urlencode(hashed);
+    return base64encoded;
+  }
+
+  function generateCodeAndURL() {
+    codeVerifier = generateCodeVerifier();
+    generateCodeChallengeFromVerifier(codeVerifier).then((challenge) => {
+      codeChallenge = challenge;
+      initiateFitbitAuthorization();
+    });
+  }
+
+  async function initiateFitbitAuthorization() {
+    try {
+      // Use the generated codeVerifier and codeChallenge to construct the authorization URL
+      const requestURL =
+        "https://www.fitbit.com/oauth2/authorize?client_id=" +
+        clientID +
+        "&response_type=" +
+        responseType +
+        "&code_challenge=" +
+        codeChallenge +
+        "&code_challenge_method=S256" +
+        "&scope=activity%20heartrate%20location%20nutrition%20oxygen_saturation%20profile%20respiratory_rate%20settings%20sleep%20social%20temperature%20weight";
+
+      // Redirect the user to the Fitbit authorization URL
+      window.location.href = requestURL;
+    } catch (error) {
+      console.error(error);
     }
-    
+  }
 </script>
 
 <div class="container mx-auto px-4 py-10 text-center">
-<h1 class='text-3xl text-bold'>Fitbit API (test)</h1>
-<div class='w-1/2 mx-auto border rounded-xl shadow shadow-sm text-left p-4 my-4 bg-white'>
-<p>App to grant researchers access to your fitbit data. If you are happy to allow access, please click on the link below.</p>
-{#if fitbitData}
-  <p class='mt-4'>Hello {fitbitData.fitbitApiData.user.firstName}!</p>
-{:else}
-  <p style="overflow-wrap: break-word;" class='mt-4'><a href={requestURL} class='hover:underline text-blue-500'>{requestURL}</a></p>
-{/if}
+  <h1 class="text-3xl text-bold">Fitbit API (test)</h1>
+  <div class="w-1/2 mx-auto border border-neutral-300 rounded-xl shadow-md text-left p-6 my-6 bg-white">
+    {#if APIsuccess}
+      Hello {fitbitData.fitbitApiData.user.fullName}, we've successfully managed to sync your fitbit data!
+    {:else if data.authCode && APIsuccess == false}
+      <div class='text-center'>
+          <button class="bg-green-500 rounded-md hover:bg-green-400 text-lg text-white py-3 px-6 shadow-md border border-green-600/50" on:click={getToken}>
+              One more step...
+          </button>
+      </div>
+    {:else}
+    <p>
+      This app is designed to grant researchers access to your fitbit data. If
+      you are happy to allow access, please click on the link below.
+    </p>
+    <div class="text-center my-8 mb-0">
+      <button
+        class="bg-blue-500 rounded-md hover:bg-blue-400 text-lg text-white py-3 px-6 shadow-md border border-blue-600/50"
+        on:click={generateCodeAndURL}
+      >
+        Allow access to my Fitbit data
+      </button>
+    </div>
+    {/if}
+    <div class='my-4 text-left'>
+      {#if APIsuccess}
+        {@html generateKeyValueHtml(fitbitData.fitbitApiData.user)}
+      {/if}
+    </div>
+  </div>
 </div>
-</div>
-
-<div class='font-mono'>
-<p>Code Verifier = {codeVerifier}</p>
-<button class="bg-blue-500 rounded-md hover:bg-blue-400 text-xs text-white p-1 px-2" on:click={() => codeVerifier = generateCodeVerifier()}>Regenerate Code Verifier</button>
-<p>Code Challenge = {codeChallenge}</p>
-<button class="bg-blue-500 rounded-md hover:bg-blue-400 text-xs text-white p-1 px-2" on:click={getCodeChallenge}>Generate Code Challenge from verifier</button>
-{data.authCode}<br />
-Fetch token
-<button class="bg-blue-500 rounded-md hover:bg-blue-400 text-xs text-white p-1 px-2" on:click={getToken}>Get Token</button>
-</div>
-{JSON.stringify(fitbitData)}
