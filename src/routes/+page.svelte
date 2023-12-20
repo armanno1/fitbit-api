@@ -1,40 +1,31 @@
 <script>
+    import { onMount } from 'svelte';
+    import { sha256, base64urlencode, generateKeyValueHtml, dec2hex } from '$lib/helpers';
+
     let codeVerifier;
     let codeChallenge;
     let responseType = "code";
     let clientID = "23RFDV";
     export let data;
     $: fitbitData = data;
+    $: error = null
+
+    onMount(() => {
+      if (data.authCode && !fitbitData.error) {
+        getToken();
+      }
+    });
 
     async function getToken() {
       try {
-        const response = await fetch('/api?authCode=' + data.authCode + '&codeVerifier=' + localStorage.getItem('code_verifier'), {
+        const response = await fetch(`/api?authCode=${data.authCode}&codeVerifier=${localStorage.getItem('code_verifier')}`, {
           method: 'GET'
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          fitbitData = data
-        })
+        });
+        const responseData = await response.json();
+        fitbitData = responseData;
       } catch (error) {
-        console.error(error);
+        console.log(error)
       }
-    }
-
-    function generateKeyValueHtml(jsonData) {
-        let html = '';
-
-        // Iterate over each key/value pair in the JSON object
-        for (const [key, value] of Object.entries(jsonData)) {
-            html += `<p><strong>${key}:</strong> ${value}</p>`;
-        }
-
-        return html;
-    }
-
-
-    // generate code verifier
-    function dec2hex(dec) {
-      return ("0" + dec.toString(16)).substr(-2);
     }
   
     function generateCodeVerifier() {
@@ -43,26 +34,6 @@
       const code_verifier = Array.from(array, dec2hex).join("");
       localStorage.setItem("code_verifier", code_verifier);
       return code_verifier;
-    }
-  
-    function sha256(plain) {
-      // returns promise ArrayBuffer
-      const encoder = new TextEncoder();
-      const data = encoder.encode(plain);
-      return window.crypto.subtle.digest("SHA-256", data);
-    }
-  
-    function base64urlencode(a) {
-      var str = "";
-      var bytes = new Uint8Array(a);
-      var len = bytes.byteLength;
-      for (var i = 0; i < len; i++) {
-        str += String.fromCharCode(bytes[i]);
-      }
-      return btoa(str)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
     }
   
     async function generateCodeChallengeFromVerifier(v) {
@@ -95,47 +66,51 @@
         // Redirect the user to the Fitbit authorization URL
         window.location.href = requestURL;
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     }
   </script>
+
+  {#if fitbitData.error}
+  <div class='text-center text-rose-800 p-4 -mb-14'>
+    <p>Error! {fitbitData.error}</p>
+  </div>
+  {/if}
   
-  <div class="container mx-auto px-4 py-10 text-center">
-    <h1 class="text-3xl text-bold">Fitbit API (test)</h1>
-    <div class="w-1/2 mx-auto border border-neutral-300 rounded-xl shadow-md text-left p-6 my-6 bg-white">
+  <div class="container px-4 py-10 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
+    <div class="border border-stone-300/75 rounded-xl text-left p-14 my-6 mb-2 bg-white text-stone-900">
       {#if fitbitData.user}
-        Hello {fitbitData.user.firstName}, we've successfully managed to sync your fitbit data!
+      <h1 class="text-5xl font-bold font-serif">Thanks {fitbitData.user.firstName}!</h1>
+      <p class="text-2xl font-light text-stone-500 my-7">You've successully linked your fitbit account 🎉🎉<br />You can now close this window.</p>
+      <p class='text-stone-800 font-bold font-mono text-small'>Just as a preview Ehsanul, we get a lot of user metadata as you can see below.</p>
+      <div class='my-4 text-left font-mono break-words'>
+        {#if fitbitData.user}
+         {@html generateKeyValueHtml(fitbitData.user)}
+        {/if}
+      </div>
       {:else if data.authCode && !fitbitData.error}
-        <div class='text-center'>
-            <button class="bg-green-500 rounded-md hover:bg-green-400 text-lg text-white py-3 px-6 shadow-md border border-green-600/50" on:click={getToken}>
-                Success! Please click here to continue...
-            </button>
-        </div>
+        <div class='items-center'>
+          <div role="status">
+            <svg aria-hidden="true" class="w-8 h-8 text-gray-100 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+            </svg>
+        </div>        
+      </div>
       {:else}
-      <p>
-        This app is designed to grant researchers access to your fitbit data. If
-        you are happy to allow access, please click on the link below.
+      <h1 class="text-6xl font-bold font-serif">Hello!</h1>
+      <p class="text-2xl font-light text-stone-500 my-7">We need permission to use your fitbit data for research. <a href="#" class='text-teal-700 hover:underline'>Find out more →</a></p>
+      <p class='text-stone-800'><strong>Can put some more information for user here or some terms to agree to etc... </strong>Nunc in nisl auctor, convallis urna sit amet, tincidunt velit. Mauris tempor purus augue, vitae tristique tellus cursus eget. Aenean neque tortor, porttitor in pulvinar condimentum, cursus quis sapien.
       </p>
       <div class="text-center my-8 mb-0">
         <button
-          class="bg-blue-500 rounded-md hover:bg-blue-400 text-lg text-white py-3 px-6 shadow-md border border-blue-600/50"
+          class="bg-teal-600 rounded-full hover:bg-teal-700 text-lg text-white py-4 px-8"
           on:click={generateCodeAndURL}
         >
           Allow access to my Fitbit data
         </button>
       </div>
       {/if}
-      <div class='my-4 text-left'>
-        {#if fitbitData.user}
-        {@html generateKeyValueHtml(fitbitData.user)}
-        {/if}
-      </div>
     </div>
+    <p class='text-neutral-500'>Contact us at ehsanul@something.com. Privacy policy. Blah...</p>
   </div>
-  
-  <!-- <div class="font-mono">
-    <p>Code Verifier = {codeVerifier}</p>
-    <p>Code Challenge = {codeChallenge}</p>
-    {data.authCode}<br />
-    Fetch token
-  </div> -->
