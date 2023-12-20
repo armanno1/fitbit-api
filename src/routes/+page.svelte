@@ -81,7 +81,7 @@
     <div class="border border-stone-300/75 rounded-xl text-left p-14 my-6 mb-2 bg-white text-stone-900">
       {#if fitbitData.user}
       <h1 class="text-5xl font-bold font-serif">Thanks {fitbitData.user.firstName}!</h1>
-      <p class="text-2xl font-light text-stone-500 my-7">You've successully linked your fitbit account 🎉🎉<br />You can now close this window.</p>
+      <p class="text-2xl font-light text-stone-500 my-7">You're all set!</p>
       <p class='text-stone-800 font-bold font-mono text-small'>Just as a preview Ehsanul, we get a lot of user metadata as you can see below.</p>
       <div class='my-4 text-left font-mono break-words'>
         {#if fitbitData.user}
