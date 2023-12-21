@@ -72,21 +72,18 @@
   </script>
 
   {#if fitbitData.error}
-  <div class='text-center text-rose-800 p-4 -mb-14'>
-    <p>Error! {fitbitData.error}</p>
+  <div class='text-center text-teal-800 p-4 -mb-14'>
+    <p>Uh oh! There's been an error. Normally this happens if you've refreshed the page. Please <a href='/'>click here</a>.</p>
   </div>
   {/if}
-  
   <div class="container px-4 py-10 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
     <div class="border border-stone-300/75 rounded-xl text-left p-14 my-6 mb-2 bg-white text-stone-900">
       {#if fitbitData.user}
-      <h1 class="text-5xl font-bold font-serif">Thanks {fitbitData.user.firstName}!</h1>
-      <p class="text-2xl font-light text-stone-500 my-7">You're all set!</p>
-      <p class='text-stone-800 font-bold font-mono text-small'>Just as a preview Ehsanul, we get a lot of user metadata as you can see below.</p>
-      <div class='my-4 text-left font-mono break-words'>
-        {#if fitbitData.user}
-         {@html generateKeyValueHtml(fitbitData.user)}
-        {/if}
+        <h1 class="text-5xl font-bold font-serif">Thanks {fitbitData.user.firstName}!</h1>
+        <p class="text-2xl font-light text-stone-500 my-7">You're all set!</p>
+        <p class='text-stone-800 font-bold font-mono text-small'>Just as a preview Ehsanul, we get a lot of user metadata as you can see below.</p>
+        <div class='my-4 text-left font-mono break-words'>
+        {@html generateKeyValueHtml(fitbitData.user)}
       </div>
       {:else if data.authCode && !fitbitData.error}
         <div class='items-center'>

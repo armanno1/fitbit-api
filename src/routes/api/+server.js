@@ -1,7 +1,7 @@
 import { supabase } from "$lib/server/supabaseClient.js";
-
-const client_secret = "335b6e53dc10a9cd2c243fe0a38780e4";
-const client_ID = "23RFDV";
+import { CLIENT_SECRET } from "$env/static/private";
+import { PUBLIC_CLIENT_ID } from "$env/static/public";
+console.log(CLIENT_SECRET, PUBLIC_CLIENT_ID)
 
 export async function GET({ url }) {
   const authCode = url.searchParams.get("authCode");
@@ -18,11 +18,11 @@ export async function GET({ url }) {
     const tokenResponse = await fetch("https://api.fitbit.com/oauth2/token", {
       method: "POST",
       headers: {
-        Authorization: "Basic " + btoa(`${client_ID}:${client_secret}`),
+        Authorization: "Basic " + btoa(`${PUBLIC_CLIENT_ID}:${CLIENT_SECRET}`),
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
-        client_id: "23RFDV",
+        client_id: PUBLIC_CLIENT_ID,
         grant_type: "authorization_code",
         code: authCode,
         code_verifier: codeVerifier,
