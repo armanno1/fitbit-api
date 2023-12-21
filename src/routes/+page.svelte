@@ -65,7 +65,7 @@
   
         // Redirect the user to the Fitbit authorization URL
         window.location.href = requestURL;
-      } catch (error) {
+      } catch (error) {git 
         console.log(error);
       }
     }
