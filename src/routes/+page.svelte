@@ -65,15 +65,15 @@
   
         // Redirect the user to the Fitbit authorization URL
         window.location.href = requestURL;
-      } catch (error) {git 
+      } catch (error) {
         console.log(error);
       }
     }
   </script>
 
   {#if fitbitData.error}
-  <div class='text-center text-teal-800 p-4 -mb-14'>
-    <p>Uh oh! There's been an error. Normally this happens if you've refreshed the page. Please <a href='/'>click here</a>.</p>
+  <div class='text-center text-teal-800 text-sm p-4 -mb-14'>
+    <p>Uh oh! There's been an error. Normally this happens if you've refreshed the page. Please <a href='/' class='hover:text-bold underline'>click here</a>.</p>
   </div>
   {/if}
   <div class="container px-4 py-10 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
