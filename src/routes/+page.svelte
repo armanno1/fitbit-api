@@ -73,7 +73,7 @@
 
   {#if fitbitData.error}
   <div class='text-center text-teal-800 text-sm p-4 -mb-14'>
-    <p>Uh oh! There's been an error. Normally this happens if you've refreshed the page. Please <a href='/' class='hover:text-bold underline'>click here</a>.</p>
+    <p>Uh oh! There's been an error ({fitbitData.error})</p>
   </div>
   {/if}
   <div class="container px-4 py-10 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
