@@ -45,5 +45,6 @@ export async function load({ url }) {
   let researchID = url.searchParams.get("researchID");
   let isRSIDvalid = false;
   if (isResearchIDValid(researchID)) isRSIDvalid = true;
+  console.log(researchID, isRSIDvalid)
   return { researchID, isRSIDvalid };
 }

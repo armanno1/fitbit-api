@@ -5,6 +5,13 @@ import { PUBLIC_CLIENT_ID } from "$env/static/public";
 export async function GET({ url }) {
   const authCode = url.searchParams.get("authCode");
   const codeVerifier = url.searchParams.get("codeVerifier");
+  let researchID = url.searchParams.get("researchID")
+  if (url.searchParams.get("researchID") === "null") {
+    return new Response(JSON.stringify({ error: "No research ID associated with fitbit account. Please try again using the link you received by email. If you still experience issues please email ehsanul.choudhury@gstt.nhs.uk" }), {
+      headers: { "Content-Type": "application/json" },
+      status: 400,
+    });
+  } 
 
   if (!(authCode && codeVerifier)) {
     return new Response(
@@ -35,17 +42,15 @@ export async function GET({ url }) {
       throw new Error(data.errors[0].errorType);
     }
 
-    const { sb_error } = await supabase
-      .from("fb_data_en")
-      .upsert([
-        {
-          research_id: data.user_id,
-          user_id: data.user_id,
-          access_token: data.access_token,
-          refresh_token: data.refresh_token,
-          scope: data.scope,
-          hr_data: null,
-        },
+    const { sb_error } = await supabase.from("fb_data_en").upsert([
+      {
+        research_id: researchID,
+        user_id: data.user_id,
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        scope: data.scope,
+        hr_data: null,
+      },
     ]);
 
     if (sb_error) {
@@ -73,10 +78,9 @@ export async function GET({ url }) {
       status: 200,
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: "There's been a problem. Please try again using the link you received via email. If you still experience issues please email ehsanul.choudhury@gstt.nhs.uk" }), {
       headers: { "Content-Type": "application/json" },
       status: 400,
     });
   }
 }
-

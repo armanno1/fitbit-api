@@ -30,7 +30,7 @@
       const response = await fetch(
         `/api?authCode=${data.authCode}&codeVerifier=${localStorage.getItem(
           "code_verifier"
-        )}&researchID=${localStorage.getItem("research_ID")}`,
+        )}&researchID=${localStorage.getItem("research_id")}`,
         {
           method: "GET",
         }
@@ -85,13 +85,9 @@
 </script>
 
 {#if fitbitData.error}
-  <div class="text-center text-teal-800 text-sm p-4 -mb-14">
+  <div class="text-center text-teal-800 text-sm p-4 -mb-10 w-full lg:w-1/2 2xl:w-1/3 mx-auto">
     <p>
-      There's been an error. Please try again or <a
-        href="/"
-        class="text-teal-700 font-bold hover:underline">click here</a
-      >.<br /> If you have already successfully linked your fitbit account, don't
-      worry: no further action should be necessary!
+      {fitbitData.error}
     </p>
   </div>
 {/if}
@@ -185,10 +181,10 @@
   <p class="text-neutral-500">Contact us at ehsanul.choudhury@gstt.nhs.uk</p>
   <div class="flex flex-basis mt-8">
     <div class="flex basis-1/2 justify-center">
-      <img src={guys} class="w-[210px] mr-4" />
+      <img src={guys} class="w-[210px] mr-4" alt="Guys and St Thomas Hospital NHS logo"/>
     </div>
     <div class="flex basis-1/2 justify-center">
-      <img src={kcl} class="w-24" />
+      <img src={kcl} class="w-24" alt="Kings College London logo"/>
     </div>
   </div>
 </div>
