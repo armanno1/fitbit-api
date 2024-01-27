@@ -1,7 +1,6 @@
 import { supabase } from "$lib/server/supabaseClient.js";
 import { CLIENT_SECRET } from "$env/static/private";
 import { PUBLIC_CLIENT_ID } from "$env/static/public";
-console.log(CLIENT_SECRET, PUBLIC_CLIENT_ID)
 
 export async function GET({ url }) {
   const authCode = url.searchParams.get("authCode");
@@ -9,7 +8,7 @@ export async function GET({ url }) {
 
   if (!(authCode && codeVerifier)) {
     return new Response(
-      JSON.stringify({ missing: "missing authCode or codeVerifier" }),
+      JSON.stringify({ missing: "Missing authCode or codeVerifier" }),
       { headers: { "Content-Type": "application/json" } }
     );
   }
@@ -37,16 +36,17 @@ export async function GET({ url }) {
     }
 
     const { sb_error } = await supabase
-      .from("fb_user_data")
+      .from("fb_data_en")
       .upsert([
         {
+          research_id: data.user_id,
           user_id: data.user_id,
           access_token: data.access_token,
           refresh_token: data.refresh_token,
           scope: data.scope,
-          hr_data: {"test": "test"},
+          hr_data: null,
         },
-      ]);
+    ]);
 
     if (sb_error) {
       throw new Error(sb_error.message);
@@ -79,3 +79,4 @@ export async function GET({ url }) {
     });
   }
 }
+
