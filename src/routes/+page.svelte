@@ -104,10 +104,10 @@
     class="border border-stone-300/75 rounded-xl text-left p-14 my-6 mb-2 bg-white text-stone-900 shadow-xl shadow-stone-300/25"
   >
     {#if fitbitData.user}
-      <h1 class="text-5xl font-bold font-serif">
+      <h1 class="text-2xl font-bold font-serif">
         Thanks {fitbitData.user.firstName}!
       </h1>
-      <p class="text-2xl font-light text-stone-500 my-7">You're all set!</p>
+      <p class="text-2xl font-light text-stone-500 my-7">You've successfully linked your fitbit account. You can now safely close this window.</p>
     {:else if data.authCode && !fitbitData.error}
       <div class="items-center">
         <div role="status">
