@@ -9,10 +9,11 @@
   import guys from "$lib/assets/guys.png";
   import kcl from "$lib/assets/kcl.svg";
 
+  let TOSchecked = false
+  let PISchecked = false
   let codeVerifier, codeChallenge;
   let responseType = "code";
   let clientID = PUBLIC_CLIENT_ID;
-
   export let data;
   $: fitbitData = data;
 
@@ -127,24 +128,24 @@
       </div>
     {:else}
       <p class="text-2xl font-light text-stone-500">
-        We need your permission to access your FitBit data. This will allow us
+        We need permission to access your FitBit data. This will allow us
         to capture your heart rate and step count for the study period.
       </p>
       <div class="mt-6">
-        <div class="flex items-center">
+        <div class="flex items-center mb-2">
           <input
             id="default-checkbox"
             type="checkbox"
-            value=""
-            class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded"
+            bind:checked={PISchecked}
+            class="w-4 h-4 shrink-0 text-teal-600 bg-gray-100 border-gray-300 rounded"
           />
           <label
             for="default-checkbox"
-            class="ms-2 text-sm font-medium text-gray-900"
-            >I have read the participant information sheet <a
+            class="text-sm text-stone-500 ms-3"
+            >I have read the <a
               href="/"
               class="text-teal-700 hover:underline"
-              >(click here if you haven't →)</a
+              >Participant Information Sheet</a
             ></label
           >
         </div>
@@ -152,12 +153,12 @@
           <input
             id="TOS-checkbox"
             type="checkbox"
-            value=""
-            class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded"
+            bind:checked={TOSchecked}
+            class="w-4 h-4 shrink-0 text-teal-600 bg-gray-100 border-gray-300 rounded"
           />
           <label
             for="TOS-checkbox"
-            class="ms-2 text-sm font-medium text-gray-900"
+            class="text-sm text-stone-500 ms-3"
           >
             I agree to the <a href="/" class="text-teal-700 hover:underline"
               >Terms of Service</a
@@ -170,8 +171,9 @@
       </div>
       <div class="text-center my-8 mb-0">
         <button
-          class="bg-teal-600 rounded-full hover:bg-teal-700 text-lg text-white py-4 px-8"
+          class="bg-teal-600 rounded-full hover:bg-teal-700 text-lg text-white py-4 px-8 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:border disabled:text-gray-500 disabled:border-gray-400/40"
           on:click={generateCodeAndURL}
+          disabled={!(TOSchecked && PISchecked)}
         >
           Allow access to my Fitbit data
         </button>
@@ -184,7 +186,7 @@
       <img src={guys} class="w-[210px] mr-4" alt="Guys and St Thomas Hospital NHS logo"/>
     </div>
     <div class="flex basis-1/2 justify-center">
-      <img src={kcl} class="w-24" alt="Kings College London logo"/>
+      <img src={kcl} class="w-24 shrink-0" alt="Kings College London logo"/>
     </div>
   </div>
 </div>
