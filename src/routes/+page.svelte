@@ -80,12 +80,13 @@
 </script>
 
 {#if fitbitData.error}
-  <div
-    class="text-center text-teal-800 text-sm p-4 -mb-10 w-full lg:w-1/2 2xl:w-1/3 mx-auto"
-  >
-    <p>
-      {fitbitData.error}
-    </p>
+  <div role="alert" class='mb-8'>
+    <div class="bg-red-500 text-white font-bold text-sm rounded-t px-4 py-1">
+      Error
+    </div>
+    <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 text-sm">
+      <p>{fitbitData.error}</p>
+    </div>
   </div>
 {/if}
 {#if fitbitData.user}
@@ -144,11 +145,11 @@
         class="w-4 h-4 shrink-0 text-teal-600 bg-gray-100 border-gray-300 rounded"
       />
       <label for="TOS-checkbox" class="text-sm text-stone-500 ms-3">
-        I agree to the <a href="/" class="text-teal-700 hover:underline"
+        I agree to the <a href="/terms" class="text-teal-700 hover:underline"
           >Terms of Service</a
         >
         and
-        <a href="/" class="text-teal-700 hover:underline">Privacy Policy</a
+        <a href="/privacy" class="text-teal-700 hover:underline">Privacy Policy</a
         ></label
       >
     </div>
