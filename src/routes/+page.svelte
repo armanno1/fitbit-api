@@ -131,7 +131,7 @@
         to capture your heart rate and step count for the study period.
       </p>
       <div class="mt-6">
-        <div class="flex items-center mb-4">
+        <div class="flex items-center">
           <input
             id="default-checkbox"
             type="checkbox"
