@@ -6,8 +6,9 @@ export async function GET({ url }) {
   const authCode = url.searchParams.get("authCode");
   const codeVerifier = url.searchParams.get("codeVerifier");
   let researchID = url.searchParams.get("researchID")
+
   if (url.searchParams.get("researchID") === "null") {
-    return new Response(JSON.stringify({ error: "No research ID associated with fitbit account. Please try again using the link you received by email. If you still experience issues please email ehsanul.choudhury@gstt.nhs.uk" }), {
+    return new Response(JSON.stringify({ error: "No research ID associated with fitbit account. Please try again using the link you received by email." }), {
       headers: { "Content-Type": "application/json" },
       status: 400,
     });
@@ -36,29 +37,21 @@ export async function GET({ url }) {
     });
 
     const data = await tokenResponse.json();
-
+  
     if (data.errors) {
-      console.log(data.errors[0].errorType);
-      throw new Error(data.errors[0].errorType);
+      throw new Error(data.errors[0]);
     }
 
-    const { sb_error } = await supabase.from("fb_data_en").upsert([
+    const { sb_error } = await supabase.rpc("upsert_fb_data_en2",
       {
-        research_id: researchID,
-        user_id: data.user_id,
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        scope: data.scope,
-        hr_data: null,
-      },
-    ]);
+        p_research_id: researchID,
+        p_user_id: data.user_id,
+        p_refresh_token: data.refresh_token,
+        p_scope: data.scope,
+      });
 
     if (sb_error) {
-      throw new Error(sb_error.message);
-    }
-
-    if (!data.access_token) {
-      throw new Error("Access token not found in response");
+      throw new Error(sb_error);
     }
 
     const userDataResponse = await fetch(
