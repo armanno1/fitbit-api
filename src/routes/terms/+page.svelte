@@ -1,66 +1,38 @@
-<div class='text-lg'>Privacy Policy</div>
+<div class="text-3xl text-stone-500 mb-10">Terms of Service</div>
 
-Our contact details 
-Name: 
-Address:
-Phone Number:
-E-mail:
- 
-The type of personal information we collect 
-We currently collect and process the following information:
-•	Personal identifiers, contacts and characteristics (for example, name and contact details)
-•	[Add to this list as appropriate]
-
-
- 
-How we get the personal information and why we have it
-Most of the personal information we process is provided to us directly by you for one of the following reasons:
-•	[Add the reasons you collected personal information]
-[If applicable] We also receive personal information indirectly, from the following sources in the following scenarios:
-•	[Add the source of any data collected indirectly and why you collected the personal information]
-We use the information that you have given us in order to [list how you use the personal information]. 
-We may share this information with [enter organisations or individuals].
-Under the UK General Data Protection Regulation (UK GDPR), the lawful bases we rely on for processing this information are: [delete as appropriate]
-(a) Your consent. You are able to remove your consent at any time. You can do this by contacting [contact details]
-(b) We have a contractual obligation.
-(c) We have a legal obligation.
-(d) We have a vital interest.
-(e) We need it to perform a public task.
-(f) We have a legitimate interest.
-
- 
-How we store your personal information 
-Your information is securely stored. 
-We keep [type of personal information] for [time period]. We will then dispose your information by [explain how you will delete their data].
-
- 
-Your data protection rights
-Under data protection law, you have rights including:
-Your right of access - You have the right to ask us for copies of your personal information. 
-Your right to rectification - You have the right to ask us to rectify personal information you think is inaccurate. You also have the right to ask us to complete information you think is incomplete. 
-Your right to erasure - You have the right to ask us to erase your personal information in certain circumstances. 
-Your right to restriction of processing - You have the right to ask us to restrict the processing of your personal information in certain circumstances. 
-Your right to object to processing - You have the the right to object to the processing of your personal information in certain circumstances.
-Your right to data portability - You have the right to ask that we transfer the personal information you gave us to another organisation, or to you, in certain circumstances.
-You are not required to pay any charge for exercising your rights. If you make a request, we have one month to respond to you.
-Please contact us at [insert email address, phone number and or postal address] if you wish to make a request.
-
-
-
-
- 
-How to complain
-If you have any concerns about our use of your personal information, you can make a complaint to us at [Insert your organisation’s contact details for data protection queries].
-You can also complain to the ICO if you are unhappy with how we have used your data.
-The ICO’s address:            
-Information Commissioner’s Office
-Wycliffe House
-Water Lane
-Wilmslow
-Cheshire
-SK9 5AF
-
-Helpline number: 0303 123 1113
-ICO website: https://www.ico.org.uk
-
- 
+<div class="">
+  <div class="text-md font-bold mb-10">
+    The Fitbit terms of service are outlined here: <a
+      href="https://www.fitbit.com/global/us/legal/terms-
+        of-service"
+      class="text-teal-700 font-bold hover:underline"
+      >https://www.fitbit.com/global/us/legal/terms- of-service</a
+    >
+  </div>
+  <p class="mb-10">
+    The SEvERe-PTS study (Structured Exercise versus Endovascular Reconstruction
+    in Post Thrombotic Syndrome) is a research study sponsored by Guy’s and St
+    Thomas’ NHS Foundation Trust (GSTT) and co-sponsored by King’s College
+    London (KCL). The study has been internally funded by The Academic
+    Department of Vascular Surgery (ADVS) at St. Thomas’ Hospital.
+  </p>
+  <p class="mb-10">
+    By taking part in the study, you agree to conditions outlined in the
+    participant information sheet and have provided the researchers with your
+    signed consent form. By using this application, you agree to provide us with
+    your Fitbit user ID, step count and heart rate data, and agree for it to be
+    stored in accordance with our privacy policy. In addition, you agree to
+    provide us with associated metadata but understand that this will not be
+    stored or used as part of the study. You agree to continue to allow us
+    access to this data to cover the whole of the study period or inform us if
+    you no longer wish to provide access. You agree to allow us to store your
+    heart rate and step count data in an anonymised fashion for use in this
+    research study. You agree to inform us if you no longer wish to take part in
+    the study.
+  </p>
+  <p class="mb-10">
+    We agree to keep your data securely in accordance with UK Data Protection
+    Regulations (GDPR). We agree not to use your data for any purpose other than
+    stated in the participant information sheet.
+  </p>
+</div>

@@ -32,7 +32,8 @@
       as outlined in the Participant Information Sheet.
     </p>
     <p class="">
-      We may share this information with the NHS or Kings College London (the
+      We may share this information with Guy’s &amp; St. Thomas’ NHS
+      Foundation Trust or Kings College London (the
       university with which this research study is affiliated).
     </p>
   </div>
@@ -44,7 +45,7 @@
     </div>
     <p>
       (a) Your consent. You are able to remove your consent at any time. You can
-      do this by contacting email.
+      do this by contacting email (ehsanul.choudhury@gstt.nhs.uk)
     </p>
     <p>(b) We have a legitimate interest.</p>
   </div>
