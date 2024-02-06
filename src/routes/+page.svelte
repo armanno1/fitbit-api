@@ -70,7 +70,7 @@
         "&code_challenge=" +
         codeChallenge +
         "&code_challenge_method=S256" +
-        "&scope=activity%20heartrate%20location%20nutrition%20oxygen_saturation%20profile%20respiratory_rate%20settings%20sleep%20social%20temperature%20weight";
+        "&scope=activity%20heartrate%20profile%20";
       // redirect the user to the Fitbit authorization URL
       window.location.href = requestURL;
     } catch (error) {
@@ -97,6 +97,7 @@
     You've successfully linked your fitbit account. You can now safely close
     this window.
   </p>
+
 {:else if data.authCode && !fitbitData.error}
   <div class="items-center">
     <div role="status">

@@ -1,4 +1,7 @@
 <div class="text-stone-700">
+  <div class="mb-2">
+    <a href="/" class="text-teal-700 font-bold hover:underline">Go back</a>
+  </div>
   <div class="text-3xl text-stone-500 mb-10">Privacy Policy</div>
 
   <div class="mb-10">
@@ -32,9 +35,9 @@
       as outlined in the Participant Information Sheet.
     </p>
     <p class="">
-      We may share this information with Guy’s &amp; St. Thomas’ NHS
-      Foundation Trust or Kings College London (the
-      university with which this research study is affiliated).
+      We may share this information with Guy’s &amp; St. Thomas’ NHS Foundation
+      Trust or Kings College London (the university with which this research
+      study is affiliated).
     </p>
   </div>
 
@@ -95,7 +98,7 @@
   </div>
   <div class="mb-10">
     <div class="font-bold mb-2">How to complain</div>
-    <p class='mb-2'>
+    <p class="mb-2">
       If you have any concerns about our use of your personal information, you
       can make a complaint to us at ehsanul.choudhury@gstt.nhs.uk or
       diana.roque@gstt.nhs.uk. You can also complain to the ICO if you are
@@ -117,6 +120,10 @@
     </p>
   </div>
   <div>
-    This privacy policy was based on an Information Commissioner's Office template available <a href='https://ico.org.uk/for-organisations/advice-for-small-organisations/make-your-own-privacy-notice/' class='text-teal-700 hover:underline font-bold'>here</a> to ensure compliance with best practices.
+    This privacy policy was based on an Information Commissioner's Office
+    template available <a
+      href="https://ico.org.uk/for-organisations/advice-for-small-organisations/make-your-own-privacy-notice/"
+      class="text-teal-700 hover:underline font-bold">here</a
+    > to ensure compliance with best practices.
   </div>
 </div>

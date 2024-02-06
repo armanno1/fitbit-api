@@ -1,5 +1,8 @@
-<div class="text-3xl text-stone-500 mb-10">Terms of Service</div>
+<div class="mb-2">
+  <a href="/" class="text-teal-700 font-bold hover:underline">Go back</a>
+</div>
 
+<div class="text-3xl text-stone-500 mb-10">Terms of Service</div>
 <div class="">
   <div class="text-md font-bold mb-10">
     The Fitbit terms of service are outlined here: <a
