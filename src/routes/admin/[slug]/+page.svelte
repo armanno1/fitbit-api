@@ -3,4 +3,4 @@
   let hrdata = data.hr;
 </script>
 
-{hrdata}
+{JSON.stringify(hrdata)}
