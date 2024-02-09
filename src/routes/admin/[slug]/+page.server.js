@@ -58,7 +58,7 @@ export async function load({ params, locals: { getSession } }) {
       }
     );
 
-    const HRdata = await data2.json();
+    const HRdata = await data2.json(); //tidy up these variable names!
 
     return { hr: HRdata, researchID: params.slug };
   } catch (error) {

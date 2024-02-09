@@ -12,8 +12,8 @@
   $: fitbitData = data;
 
   onMount(() => {
-    if (data.isRSIDvalid && !localStorage.getItem("research_id")) {
-      localStorage.setItem("research_id", data.researchID);
+    if (data.isRSIDvalid) {
+      localStorage.setItem("research_id", data.rsid);
     }
     if (data.authCode && !fitbitData.error) {
       getToken();
@@ -71,7 +71,6 @@
         codeChallenge +
         "&code_challenge_method=S256" +
         "&scope=activity%20heartrate%20profile%20";
-      // redirect the user to the Fitbit authorization URL
       window.location.href = requestURL;
     } catch (error) {
       console.log(error);
@@ -80,30 +79,35 @@
 </script>
 
 {#if fitbitData.error}
-  <div role="alert" class='mb-8'>
-    <div class="bg-red-500 text-white font-bold text-sm rounded-t px-4 py-1">
-      Error
-    </div>
-    <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 text-sm">
-      <p>{fitbitData.error}</p>
-    </div>
-  </div>
-{/if}
-{#if fitbitData.user}
-  <h1 class="text-2xl font-bold font-serif">
-    Thanks {fitbitData.user.firstName}!
-  </h1>
-  <p class="text-2xl font-light text-stone-500 my-7">
-    You've successfully linked your fitbit account. You can now safely close
-    this window.
+  <p class="text-center text-red-700 mb-4 font-light">
+    {fitbitData.error}
   </p>
+{/if}
 
+{#if fitbitData.user}
+  <p class="text-xl font-light text-stone-700 mb-4">
+    Thanks! You have successfully granted the SEvERe-PTS research team access to
+    your heart rate and step count data. Please do not refresh the page.
+  </p>
+  <p class="text-xl font-light text-stone-700">
+    You can now safely close this window.
+  </p>
+{:else if !data.authCode && (!data.rsid || !data.isRSIDvalid)}
+  <!-- This just makes sure the callback url doesn't flash this error -->
+  <p class="text-stone-700 text-xl font-light break-all">
+    Unfortunately the link you have used is invalid. Please check the linked
+    provided to you by email or contact <a
+      href="mailto:ehsanul.choudhury@gstt.nhs.uk"
+      class="text-teal-700 hover:underline">ehsanul.choudhury@gstt.nhs.uk</a
+    >.
+  </p>
 {:else if data.authCode && !fitbitData.error}
-  <div class="items-center">
-    <div role="status">
+  <!-- Loading spinner -->
+  <div class="text-center">
+    <div role="status" class="text-center">
       <svg
         aria-hidden="true"
-        class="w-8 h-8 text-gray-100 animate-spin fill-blue-600"
+        class="w-12 h-12 text-gray-100 animate-spin fill-teal-600 mx-auto"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +123,9 @@
       </svg>
     </div>
   </div>
+  <!-- End loading spinner -->
 {:else}
-  <p class="text-2xl font-light text-stone-500">
+  <p class="text-xl font-light text-stone-700">
     We need permission to access your FitBit data. This will allow us to look at
     your heart rate and step count for the study period.
   </p>
@@ -150,7 +155,8 @@
           >Terms of Service</a
         >
         and
-        <a href="/privacy" class="text-teal-700 hover:underline">Privacy Policy</a
+        <a href="/privacy" class="text-teal-700 hover:underline"
+          >Privacy Policy</a
         ></label
       >
     </div>
@@ -165,3 +171,4 @@
     </button>
   </div>
 {/if}
+

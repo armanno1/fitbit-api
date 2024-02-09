@@ -1,6 +1,6 @@
 export async function load({ url, data }) {
   let authCode = url.searchParams.get("code");
-  let researchID = data.researchID;
+  let rsid = data.rsid;
   let isRSIDvalid = data.isRSIDvalid;
-  return { authCode, researchID, isRSIDvalid };
+  return { authCode, rsid, isRSIDvalid };
 }

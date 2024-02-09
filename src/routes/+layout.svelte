@@ -5,22 +5,6 @@
   export let data;
 </script>
 
-{#if data.session}
-  <div
-    class="text-center py-2 border-b border-stone-300/50 bg-stone-200 text-stone-700 text-sm"
-  >
-    <form action="/login_logout?/logout" method="POST">
-      <button
-        type="submit"
-        class="border border-stone-400/50 rounded-md py-1 px-2 bg-stone-300/25 hover:bg-stone-300"
-        >Logout</button
-      >
-      /
-      <a href="/" class="hover:underline">Home</a> /
-      <a href="/admin" class="hover:underline">Admin</a>
-    </form>
-  </div>
-{/if}
 <div class="container px-4 py-6 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
   <div class="flex flex-row items-center">
     <div class="flex text-2xl text-stone-600">
@@ -46,3 +30,19 @@
     />
   </div>
 </div>
+
+{#if !data.session}
+  <div class="text-center text-teal-700 text-sm hover:underline">
+    <a href="/login_logout">Researcher Login</a>
+  </div>
+{:else}
+  <div class="text-center">
+    <form action="/login_logout?/logout" method="POST">
+      <button
+        type="submit"
+        class="rounded-md py-1.5 px-3 text-white text-sm bg-teal-600 hover:bg-teal-700"
+        >Logout</button
+      >
+    </form>
+  </div>
+{/if}

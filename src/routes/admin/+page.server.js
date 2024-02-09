@@ -8,10 +8,19 @@ export async function load({ locals: { getSession } }) {
     throw redirect(303, "/");
   }
 
-  const { data, error } = await supabase
-    .from("fb_data_en2")
-    .select("research_id");
-  let researchIDs = await data;
+  const { data: approvedResearchIDs, approvedError } = await supabase
+    .from("research_ids")
+    .select("research_id")
+    .eq("granted_permission", true);
 
-  return { researchIDs };
+  const { data: unapprovedResearchIDs, unapprovedError } = await supabase
+    .from("research_ids")
+    .select("research_id")
+    .eq("granted_permission", false);
+
+  if (approvedError || unapprovedError) {
+    throw new Error(); //could write a function here to return any error's message I guess
+  }
+
+  return { approvedResearchIDs, unapprovedResearchIDs };
 }
