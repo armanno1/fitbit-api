@@ -1,6 +1,6 @@
 <div class="text-stone-700">
-  <div class="mb-2">
-    <a href="/" class="text-teal-700 font-bold hover:underline">Go back</a>
+  <div class="mb-4 text-stone-500">
+    Please close this window (do not use back button)
   </div>
   <div class="text-3xl text-stone-500 mb-10">Privacy Policy</div>
 

@@ -4,7 +4,6 @@
   import { PUBLIC_CLIENT_ID } from "$env/static/public";
   import pdfurl from "$lib/assets/pis.pdf?url";
 
-
   let TOSchecked = false;
   let PISchecked = false;
   let codeVerifier, codeChallenge;
@@ -140,8 +139,10 @@
         class="w-4 h-4 shrink-0 text-teal-600 bg-gray-100 border-gray-300 rounded"
       />
       <label for="default-checkbox" class="text-sm text-stone-500 ms-3"
-        >I have read the <a href={pdfurl} class="text-teal-700 hover:underline"
-          >Participant Information Sheet</a
+        >I have read the <a
+          href={pdfurl}
+          target="_blank"
+          class="text-teal-700 hover:underline">Participant Information Sheet</a
         ></label
       >
     </div>
@@ -153,11 +154,13 @@
         class="w-4 h-4 shrink-0 text-teal-600 bg-gray-100 border-gray-300 rounded"
       />
       <label for="TOS-checkbox" class="text-sm text-stone-500 ms-3">
-        I agree to the <a href="/terms" class="text-teal-700 hover:underline"
-          >Terms of Service</a
+        I agree to the <a
+          href="/terms"
+          target="_blank"
+          class="text-teal-700 hover:underline">Terms of Service</a
         >
         and
-        <a href="/privacy" class="text-teal-700 hover:underline"
+        <a href="/privacy" target="_blank" class="text-teal-700 hover:underline"
           >Privacy Policy</a
         ></label
       >
