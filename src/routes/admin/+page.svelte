@@ -13,7 +13,7 @@
       <tr>
         <th class="px-6 py-2 border-b border-gray-200">Research ID</th>
         <th class="px-6 py-2 border-b border-gray-200">Granted Access?</th>
-
+        <th class="px-6 py-2 border-b border-gray-200">Granted Time</th>
       </tr>
     </thead>
     <tbody>
@@ -26,19 +26,19 @@
               >{rid.research_id}</a
             >
           </td>
-          <td class='px-6 py-2 border-b border-gray-100'>
-            Yes
-          </td>
-        </tr>
+          <td class="px-6 py-2 border-b border-gray-100"> Yes </td>
+          <td class="px-6 py-2 border-b border-gray-100">
+            {rid.granted_permission_at}
+          </td></tr
+        >
       {/each}
       {#each data.unapprovedResearchIDs as id}
         <tr>
           <td class="px-6 py-2 border-b border-gray-100">
             {id.research_id}
           </td>
-          <td class='px-6 py-2 border-b border-gray-100'>
-            No
-          </td>
+          <td class="px-6 py-2 border-b border-gray-100"> No </td>
+          <td class="px-6 py-2 border-b border-gray-100"> NA </td>
         </tr>
       {/each}
     </tbody>

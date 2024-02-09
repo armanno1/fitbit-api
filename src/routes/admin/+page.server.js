@@ -10,7 +10,7 @@ export async function load({ locals: { getSession } }) {
 
   const { data: approvedResearchIDs, approvedError } = await supabase
     .from("research_ids")
-    .select("research_id")
+    .select("*")
     .eq("granted_permission", true);
 
   const { data: unapprovedResearchIDs, unapprovedError } = await supabase
