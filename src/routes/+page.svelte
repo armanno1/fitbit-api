@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import { sha256, base64urlencode, dec2hex } from "$lib/helpers";
   import { PUBLIC_CLIENT_ID } from "$env/static/public";
+  import pdfurl from "$lib/assets/pis.pdf?url";
+
 
   let TOSchecked = false;
   let PISchecked = false;
@@ -138,7 +140,7 @@
         class="w-4 h-4 shrink-0 text-teal-600 bg-gray-100 border-gray-300 rounded"
       />
       <label for="default-checkbox" class="text-sm text-stone-500 ms-3"
-        >I have read the <a href="/" class="text-teal-700 hover:underline"
+        >I have read the <a href={pdfurl} class="text-teal-700 hover:underline"
           >Participant Information Sheet</a
         ></label
       >
@@ -171,4 +173,3 @@
     </button>
   </div>
 {/if}
-
