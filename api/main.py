@@ -2,6 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/api/test")   # A simple GET endpoint
+@app.get("/api/python")
 def hello_world():
-    return {"message": "Hello from your FastAPI!"}
+    return {"message": "Hello World"}
