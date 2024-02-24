@@ -24,7 +24,7 @@
   async function getToken() {
     try {
       const response = await fetch(
-        `/api?authCode=${data.authCode}&codeVerifier=${localStorage.getItem(
+        `/proxy-api?authCode=${data.authCode}&codeVerifier=${localStorage.getItem(
           "code_verifier"
         )}&researchID=${localStorage.getItem("research_id")}`,
         {
@@ -95,9 +95,16 @@
   </p>
 {:else if !data.authCode && (!data.rsid || !data.isRSIDvalid)}
   <!-- This just makes sure the callback url doesn't flash this error -->
-  <p class="text-stone-700 text-xl font-light break-all">
-    Unfortunately the link you have used is invalid. Please check the linked
-    provided to you by email or contact <a
+  <p class="text-stone-700 text-xl font-light mb-4">
+    This is a portal to allow researchers access to participants' Fitbit heart
+    rate and step count data in the SEvERe-PTS study.
+  </p>
+  <p class="text-stone-700 text-xl font-light mb-4">
+    Unfortunately the link you have used to access this page is invalid.
+  </p>
+  <p class="text-stone-700 text-xl font-light">
+    If you are a research participant, it is important you use the link provided to you
+    via email from the research team. If you have any ddaifficulties please email <a
       href="mailto:ehsanul.choudhury@gstt.nhs.uk"
       class="text-teal-700 hover:underline">ehsanul.choudhury@gstt.nhs.uk</a
     >.
@@ -127,7 +134,7 @@
   <!-- End loading spinner -->
 {:else}
   <p class="text-xl font-light text-stone-700">
-    We need permission to access your FitBit data. This will allow us to look at
+    We need permission to access your Fitbit data. This will allow us to look at
     your heart rate and step count for the study period.
   </p>
   <div class="mt-8">
