@@ -1,25 +1,25 @@
 <script>
   export let data;
 
-  async function handleDownload() {
-    const response = await fetch("/api", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data.hr),
-    });
+  // async function handleDownload() {
+  //   const response = await fetch("/api", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data.hr),
+  //   });
 
-    if (response.ok) {
-      const filename = response.headers
-        .get("Content-Disposition")
-        .split("filename=")[1];
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = filename;
-      link.click();
-    }
-  }
+  //   if (response.ok) {
+  //     const filename = response.headers
+  //       .get("Content-Disposition")
+  //       .split("filename=")[1];
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = filename;
+  //     link.click();
+  //   }
+  // }
 </script>
 
 <p class="mb-4">
@@ -30,7 +30,7 @@
     Loading comments...
   {:then hr}
     {JSON.stringify(hr).slice(0, 130)}...<br /><br />
-    <button on:click={handleDownload}>Download CSV</button>
+    <!-- <button on:click={handleDownload}>Download CSV</button> -->
   {:catch error}
     <p>error loading data</p>
   {/await}
