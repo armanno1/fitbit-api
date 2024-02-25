@@ -10,11 +10,15 @@ export async function load({ params, locals: { getSession } }) {
     throw redirect(303, "/");
   }
 
+  return { hr: await updateTokensAndGetData(params.slug) };
+}
+
+async function updateTokensAndGetData(researchID) {
   try {
     const { data, error } = await supabase
       .from("decrypted_fb_data_en2")
       .select("user_id, decrypted_refresh_token, scope")
-      .eq("research_id", params.slug);
+      .eq("research_id", researchID);
 
     const refreshToken = await data[0].decrypted_refresh_token;
     const user_id = await data[0].user_id;
@@ -38,15 +42,13 @@ export async function load({ params, locals: { getSession } }) {
     let tokenData = await updatedAccessAndRefreshTokens.json();
 
     const { rpcError } = await supabase.rpc("upsert_fb_data_en2", {
-      p_research_id: params.slug,
+      p_research_id: researchID,
       p_user_id: user_id,
       p_refresh_token: tokenData.refresh_token,
       p_scope: tokenData.scope,
     });
 
-    if (rpcError) {
-      throw new Error(error.message);
-    }
+    if (rpcError) throw new Error(error.message);
 
     const data2 = await fetch(
       `https://api.fitbit.com/1/user/${user_id}/activities/heart/date/2023-01-01/2023-12-31.json`,
@@ -58,9 +60,8 @@ export async function load({ params, locals: { getSession } }) {
       }
     );
 
-    const HRdata = await data2.json(); //tidy up these variable names!
-
-    return { researchID: params.slug, hr: await HRdata };
+    const HRdata = await data2.json();
+    return { HRdata };
   } catch (error) {
     return { error: error.message };
   }
