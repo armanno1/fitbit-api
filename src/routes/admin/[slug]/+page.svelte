@@ -5,7 +5,7 @@
     const response = await fetch("/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data.hr),
+      body: JSON.stringify(data.hr["HRdata"]),
     });
 
     if (response.ok) {
@@ -34,7 +34,7 @@
       Loading...
     {:then hr}
       <p class='text-sm mb-6'>
-        {JSON.stringify(hr).slice(0, 130)}...
+        {JSON.stringify(hr["HRdata"]).slice(0, 130)}...
       </p>
       <button
         on:click={handleDownload}
