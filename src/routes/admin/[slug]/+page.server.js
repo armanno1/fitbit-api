@@ -10,15 +10,17 @@ export async function load({ params, locals: { getSession } }) {
     throw redirect(303, "/");
   }
 
-  const { data, error } = await supabase
-    .from("decrypted_fb_data_en2")
-    .select("user_id, decrypted_refresh_token, scope")
-    .eq("research_id", params.slug);
-
-  const refreshToken = await data[0].decrypted_refresh_token;
-  const user_id = await data[0].user_id;
+  let isLoading = true;
 
   try {
+    const { data, error } = await supabase
+      .from("decrypted_fb_data_en2")
+      .select("user_id, decrypted_refresh_token, scope")
+      .eq("research_id", params.slug);
+
+    const refreshToken = await data[0].decrypted_refresh_token;
+    const user_id = await data[0].user_id;
+
     const updatedAccessAndRefreshTokens = await fetch(
       "https://api.fitbit.com/oauth2/token",
       {
@@ -60,8 +62,10 @@ export async function load({ params, locals: { getSession } }) {
 
     const HRdata = await data2.json(); //tidy up these variable names!
 
-    return { hr: HRdata, researchID: params.slug };
+    return { hr: HRdata, researchID: params.slug, isLoading: false };
   } catch (error) {
-    console.log(error.message)
+    return { isLoading: false, error: error.message };
+  } finally {
+    isLoading = false;
   }
 }

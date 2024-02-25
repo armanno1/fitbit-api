@@ -26,12 +26,11 @@
   <a href="/admin" class="text-teal-700 hover:underline">Back to admin panel</a>
 </p>
 <div class="text-sm font-mono text-stone-700 break-all">
-  {#await data.hr}
-    Loading comments...
-  {:then hr}
-    {JSON.stringify(hr).slice(0, 130)}...<br /><br />
+  {data.isLoading}
+  {#if data.isLoading}
+    Loading...
+  {:else if data.hr}
+    {JSON.stringify(data.hr).slice(0, 130)}...<br /><br />
     <!-- <button on:click={handleDownload}>Download CSV</button> -->
-  {:catch error}
-    <p>error loading data</p>
-  {/await}
+  {/if}
 </div>
