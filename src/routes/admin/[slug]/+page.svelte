@@ -22,17 +22,25 @@
   }
 </script>
 
-<p class="mb-4">
-  <a href="/admin" class="text-teal-700 hover:underline">Back to admin panel</a>
-</p>
-<div class="text-sm font-mono text-stone-700 break-all">
-  <p>{data.researchID}</p><br />
+<div class="font-mono text-stone-700 break-all">
+  <p class="text-xl">{data.researchID}</p>
+  <p class="mb-4">
+    <a href="/admin" class="text-teal-700 font-sans hover:underline"
+      >Back to admin panel</a
+    >
+  </p>
   <p>
     {#await data.hr}
       Loading...
     {:then hr}
-      {JSON.stringify(hr).slice(0, 130)}...<br /><br />
-      <button on:click={handleDownload}>Download CSV</button>
+      <p class='text-sm mb-6'>
+        {JSON.stringify(hr).slice(0, 130)}...
+      </p>
+      <button
+        on:click={handleDownload}
+        class="rounded-md py-1.5 px-3 text-white text-sm font-sans bg-teal-600 hover:bg-teal-700"
+        >Download heart rate data as CSV</button
+      >
     {/await}
   </p>
 </div>
