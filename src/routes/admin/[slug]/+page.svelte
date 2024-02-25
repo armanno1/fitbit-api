@@ -2,7 +2,7 @@
   export let data;
 
   async function handleDownload() {
-    const response = await fetch("http://localhost:8000/api", {
+    const response = await fetch("/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data.hr),
