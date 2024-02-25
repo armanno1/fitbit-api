@@ -36,11 +36,13 @@
       <p class='text-sm mb-6'>
         {JSON.stringify(hr["HRdata"]).slice(0, 130)}...
       </p>
-      <button
-        on:click={handleDownload}
-        class="rounded-md py-1.5 px-3 text-white text-sm font-sans bg-teal-600 hover:bg-teal-700"
-        >Download heart rate data as CSV</button
-      >
+      <div class='text-center sm:text-left'>
+        <button
+          on:click={handleDownload}
+          class="rounded-md py-1.5 px-3 text-white font-sans bg-teal-600 hover:bg-teal-700"
+          >Download heart rate data as CSV</button
+        >
+      </div>
     {/await}
   </p>
 </div>

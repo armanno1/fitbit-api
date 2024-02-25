@@ -22,7 +22,7 @@
   </div>
 {/if}
 
-<div class="container px-4 py-6 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
+<div class="container sm:px-4 py-2 sm:py-6 text-center w-full lg:w-1/2 2xl:w-1/3 mx-auto">
   <div class="flex flex-row items-center">
     <div class="flex text-2xl text-stone-600">
       <div>
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div
-    class="border border-stone-300/75 rounded-xl text-left p-14 my-6 mb-2 bg-white text-stone-900 shadow-xl shadow-stone-300/25"
+    class="border-y sm:border border-stone-300/75 sm:rounded-xl text-left p-8 sm:p-12 xl:p-14 my-6 mb-2 bg-white text-stone-900 shadow-xl shadow-stone-300/25 overflow-x-scroll"
   >
     <slot />
   </div>
