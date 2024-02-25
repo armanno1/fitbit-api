@@ -10,8 +10,6 @@ export async function load({ params, locals: { getSession } }) {
     throw redirect(303, "/");
   }
 
-  let isLoading = true;
-
   try {
     const { data, error } = await supabase
       .from("decrypted_fb_data_en2")
@@ -62,10 +60,8 @@ export async function load({ params, locals: { getSession } }) {
 
     const HRdata = await data2.json(); //tidy up these variable names!
 
-    return { hr: HRdata, researchID: params.slug, isLoading: false };
+    return { hr: await HRdata, researchID: params.slug };
   } catch (error) {
-    return { isLoading: false, error: error.message };
-  } finally {
-    isLoading = false;
+    return { error: error.message };
   }
 }
