@@ -18,6 +18,8 @@ export async function load({ params, locals: { getSession } }) {
 
 async function updateTokensAndGetData(researchID) {
   try {
+    console.time("debug")
+
     const { data, error } = await supabase
       .from("decrypted_fb_data_en2")
       .select("user_id, decrypted_refresh_token, scope")
@@ -25,6 +27,8 @@ async function updateTokensAndGetData(researchID) {
 
     const refreshToken = await data[0].decrypted_refresh_token;
     const user_id = await data[0].user_id;
+
+    console.timeLog("debug")
 
     const updatedAccessAndRefreshTokens = await fetch(
       "https://api.fitbit.com/oauth2/token",
@@ -44,12 +48,16 @@ async function updateTokensAndGetData(researchID) {
 
     let tokenData = await updatedAccessAndRefreshTokens.json();
 
+    console.timeLog("debug")
+
     const { rpcError } = await supabase.rpc("upsert_fb_data_en2", {
       p_research_id: researchID,
       p_user_id: user_id,
       p_refresh_token: tokenData.refresh_token,
       p_scope: tokenData.scope,
     });
+
+    console.timeLog("debug")
 
     if (rpcError) throw new Error(error.message);
 
@@ -64,6 +72,10 @@ async function updateTokensAndGetData(researchID) {
     );
 
     const HRdata = await data2.json();
+
+    console.timeLog("debug")
+    console.timeEnd("debug")
+
     return { HRdata };
   } catch (error) {
     return { error: error.message };
