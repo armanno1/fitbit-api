@@ -10,7 +10,10 @@ export async function load({ params, locals: { getSession } }) {
     throw redirect(303, "/");
   }
 
-  return { hr: await updateTokensAndGetData(params.slug) };
+  return {
+    researchID: params.slug,
+    hr: await updateTokensAndGetData(params.slug),
+  };
 }
 
 async function updateTokensAndGetData(researchID) {

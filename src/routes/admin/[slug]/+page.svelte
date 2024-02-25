@@ -26,10 +26,13 @@
   <a href="/admin" class="text-teal-700 hover:underline">Back to admin panel</a>
 </p>
 <div class="text-sm font-mono text-stone-700 break-all">
-  {#await data.hr}
-    Loading...
-  {:then hr}
-    {JSON.stringify(hr).slice(0, 130)}...<br /><br />
-    <button on:click={handleDownload}>Download CSV</button>
-  {/await}
+  <p>{data.researchID}</p><br />
+  <p>
+    {#await data.hr}
+      Loading...
+    {:then hr}
+      {JSON.stringify(hr).slice(0, 130)}...<br /><br />
+      <button on:click={handleDownload}>Download CSV</button>
+    {/await}
+  </p>
 </div>
