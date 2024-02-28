@@ -27,6 +27,7 @@ app = FastAPI()
 async def root(request: Request):
     try: 
         data_dict = await request.json()
+        print(data_dict)
         heart_rate_data = HeartRateData(**data_dict)
         # so the above should really raise a validation error I guess
 
