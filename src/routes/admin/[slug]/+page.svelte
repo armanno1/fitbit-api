@@ -6,7 +6,7 @@
   async function handleDownload() {
     loading = true;
     const json_data = await data.streamed.hr;
-    const response = await fetch("api", {
+    const response = await fetch("/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(json_data["HRdata"]),
