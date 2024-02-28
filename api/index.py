@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from typing import List 
 import pandas as pd
 import io
+# from fastapi.middleware.cors import CORSMiddleware
 
 class Activity(BaseModel):
     dateTime: str
@@ -12,6 +13,15 @@ class HeartRateData(BaseModel):
     activities_heart: List[Activity] = Field(alias="activities-heart")
 
 app = FastAPI()
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"], 
+#     allow_credentials=True,  
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+#     expose_headers=["*"] 
+# )
 
 @app.post("/api")
 async def root(request: Request):
@@ -44,7 +54,6 @@ async def root(request: Request):
         csv_buffer = io.StringIO()
         df.to_csv(csv_buffer)
         response = Response(status_code=200, content=csv_buffer.getvalue(), media_type="text/csv", headers={"Content-Disposition": "attachment; filename=heart_rate_data.csv"})
-        print(response.headers)
         return response
     except: 
         raise HTTPException(status_code=400, detail="Error")

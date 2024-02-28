@@ -2,7 +2,7 @@
   export let data;
 
   async function handleDownload() {
-    const response = await fetch("/api", {
+    const response = await fetch("api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data.hr["HRdata"]),
@@ -30,19 +30,19 @@
     >
   </p>
   <p>
-    {#await data.hr}
+    {#await data.streamed.hr}
       Loading...
     {:then hr}
-      <p class='text-sm mb-6'>
+        <p class="text-sm mb-6">
         {JSON.stringify(hr["HRdata"]).slice(0, 130)}...
       </p>
-      <div class='text-center sm:text-left'>
+      <div class="text-center sm:text-left">
         <button
           on:click={handleDownload}
           class="rounded-md py-1.5 px-3 text-white font-sans bg-teal-600 hover:bg-teal-700"
           >Download heart rate data as CSV</button
         >
-      </div>
+      </div> 
     {/await}
   </p>
 </div>
